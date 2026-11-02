@@ -366,7 +366,7 @@ input[type="range"].flav::-moz-range-thumb { width: 18px; height: 18px; border: 
   .rail { display: none; }
   .masthead {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 18px 12px; border-bottom: 1px solid var(--line);
+    padding: calc(14px + env(safe-area-inset-top)) 18px 12px; border-bottom: 1px solid var(--line);
     position: sticky; top: 0; background: rgba(12, 10, 8, 0.92);
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 30;
   }
@@ -395,7 +395,8 @@ input[type="range"].flav::-moz-range-thumb { width: 18px; height: 18px; border: 
   }
   .tabbar button .ico { width: 18px; height: 18px; }
   .tabbar button[aria-current="true"] { color: var(--amber-hi); }
-  .drawer { top: auto; right: 0; left: 0; bottom: 0; width: 100%; max-height: 90vh; border-left: 0; border-top: 1px solid var(--line-strong); border-radius: 16px 16px 0 0; padding: 22px 20px calc(40px + env(safe-area-inset-bottom)); animation: sheetin 0.28s var(--ease-out); }
+  .drawer { top: auto; right: 0; left: 0; bottom: 0; width: 100%; max-height: 90vh; border-left: 0; border-top: 1px solid var(--line-strong); border-radius: 16px 16px 0 0; padding: 14px 20px calc(40px + env(safe-area-inset-bottom)); animation: sheetin 0.28s var(--ease-out); }
+  .drawer::before { content: ""; display: block; width: 40px; height: 4px; border-radius: 2px; background: rgba(239,231,218,0.18); margin: 0 auto 14px; }
   @keyframes sheetin { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
   .field-grid { grid-template-columns: 1fr; }
 }

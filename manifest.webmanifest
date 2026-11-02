@@ -1,0 +1,16 @@
+{
+  "name": "DRAM — an atlas & journal of the water of life",
+  "short_name": "DRAM",
+  "description": "Explore 194 distilleries and 184 bottles. Log every dram: ratings, flavours, notes. Local-first, works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a08",
+  "theme_color": "#0c0a08",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
