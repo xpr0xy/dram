@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0a08">
+<meta name="description" content="DRAM — an atlas and journal of the water of life. Explore 194 distilleries, log every dram.">
+<title>DRAM — an atlas & journal of the water of life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="rail">
+    <div class="wordmark">D<span>R</span>AM</div>
+    <div class="tagline">An atlas &amp; journal of the water of life.</div>
+    <nav class="rail-nav" aria-label="Views">
+      <button data-nav="browse" aria-current="true">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Browse
+      </button>
+      <button data-nav="atlas">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.5 4 5.5 4 9s-1.3 6.5-4 9c-2.7-2.5-4-5.5-4-9s1.3-6.5 4-9z"/></svg>
+        Atlas
+      </button>
+      <button data-nav="journal">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>
+        Journal
+      </button>
+      <button data-nav="map">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="9" r="2"/><circle cx="15" cy="7" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="18" cy="14" r="2"/></svg>
+        Flavour map
+      </button>
+    </nav>
+    <div class="rail-counts" id="railCounts"></div>
+    <div class="rail-foot">
+      Distillery catalog &amp; market series: <a href="https://whiskyhunter.net" target="_blank" rel="noopener">Whisky Hunter</a>.<br>
+      Your journal lives in this browser only. Export it from the Journal.
+    </div>
+  </aside>
+
+  <header class="masthead">
+    <div class="wordmark">D<span>R</span>AM</div>
+    <div class="m-counts" id="mastCounts"></div>
+  </header>
+
+  <main id="main">
+    <section class="view" id="view-browse" aria-label="Browse bottles">
+      <div class="view-head">
+        <div class="kicker">The cabinet</div>
+        <h2>Every bottle worth knowing</h2>
+        <p class="lede">A curated road through the whisky world — the standards, the cult bottles, the quiet value. Mark what you've poured, keep what you want.</p>
+      </div>
+      <div class="toolbar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input class="search" id="q" type="search" placeholder="Search bottles, distilleries, regions…" autocomplete="off" aria-label="Search bottles">
+        </div>
+        <select class="f-select" id="fCountry" aria-label="Filter by country"><option value="">All countries</option></select>
+        <select class="f-select" id="fRegion" aria-label="Filter by region"><option value="">All regions</option></select>
+        <select class="f-select" id="fStyle" aria-label="Filter by style"><option value="">All styles</option></select>
+        <select class="f-select" id="fStatus" aria-label="Filter by status">
+          <option value="">Any status</option>
+          <option value="tried">Tried</option>
+          <option value="want">Wanted</option>
+          <option value="untried">Not yet tried</option>
+        </select>
+        <button class="btn-pour" id="pourBtn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 8a4 4 0 0 1-1 6.5V22h-4v-5.5A4 4 0 0 1 9 10z"/></svg>
+          Pour me something
+        </button>
+      </div>
+      <div class="browse-status">
+        <span id="browseCount"></span>
+        <button class="chip-clear" id="clearFilters" type="button" hidden>Clear filters</button>
+      </div>
+      <div class="bottle-list" id="bottleList" role="list"></div>
+    </section>
+
+    <section class="view" id="view-atlas" hidden aria-label="Distillery atlas">
+      <div class="view-head">
+        <div class="kicker">The atlas</div>
+        <h2>Every house in the world</h2>
+        <p class="lede">194 distilleries across ten countries, region by region — the working ones, the silent ones, and the bottles still living in their cellars. Tap a house to see what it makes.</p>
+      </div>
+      <div id="atlasBody"></div>
+      <div class="market-panel">
+        <h4>The secondary market</h4>
+        <div class="sub">Quarterly auction trading across 28 international houses, 2005–2024. Real numbers, for context on why some bottles disappear.</div>
+        <canvas id="marketChart" aria-label="Market volume and average winning bid over time"></canvas>
+        <div class="market-legend" id="marketLegend"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-journal" hidden aria-label="Your journal">
+      <div class="view-head">
+        <div class="kicker">Your journal</div>
+        <h2>The record of the poured</h2>
+        <p class="lede">Ratings, notes, and the flavour constellation you're building one dram at a time.</p>
+      </div>
+      <div id="journalBody"></div>
+    </section>
+
+    <section class="view" id="view-map" hidden aria-label="Flavour map">
+      <div class="view-head">
+        <div class="kicker">The constellation</div>
+        <h2>Your palate, plotted</h2>
+        <p class="lede">Rate the six axes on bottles you've tried and watch your own map take shape. This is your palate, not anyone else's.</p>
+      </div>
+      <div class="map-controls">
+        <label for="axisX">X axis</label>
+        <select class="f-select" id="axisX">
+          <option value="smoke">Smoke</option><option value="sweet" selected>Sweet</option><option value="fruit">Fruit</option>
+          <option value="spice">Spice</option><option value="wood">Wood</option><option value="body">Body</option>
+        </select>
+        <label for="axisY">Y axis</label>
+        <select class="f-select" id="axisY">
+          <option value="smoke" selected>Smoke</option><option value="sweet">Sweet</option><option value="fruit">Fruit</option>
+          <option value="spice">Spice</option><option value="wood">Wood</option><option value="body">Body</option>
+        </select>
+      </div>
+      <div class="map-canvas-wrap">
+        <canvas id="flavorMap"></canvas>
+        <div class="map-tip" id="mapTip"></div>
+      </div>
+      <div class="map-legend" id="mapLegend"></div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Views">
+    <button data-nav="browse" aria-current="true">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      Browse
+    </button>
+    <button data-nav="atlas">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.5 4 5.5 4 9s-1.3 6.5-4 9c-2.7-2.5-4-5.5-4-9s1.3-6.5 4-9z"/></svg>
+      Atlas
+    </button>
+    <button data-nav="journal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>
+      Journal
+    </button>
+    <button data-nav="map">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="9" r="2"/><circle cx="15" cy="7" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="18" cy="14" r="2"/></svg>
+      Map
+    </button>
+  </nav>
+</div>
+
+<div class="drawer-wrap" id="drawerWrap" hidden>
+  <div class="drawer-scrim" id="drawerScrim"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Bottle details"></aside>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
